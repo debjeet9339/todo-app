@@ -114,10 +114,20 @@ export default function NotesList() {
         .notes-root {
           font-family: 'DM Sans', sans-serif;
           min-height: 100vh;
+          min-height: 100dvh;
           background: #e8e4dc;
-          padding: 3rem 2.5rem;
+          padding: 1.5rem 1rem 5rem;
           position: relative;
         }
+
+        @media (min-width: 480px) {
+          .notes-root { padding: 2rem 1.5rem 5rem; }
+        }
+
+        @media (min-width: 768px) {
+          .notes-root { padding: 3rem 2.5rem 3rem; }
+        }
+
         .notes-root::before {
           content: '';
           position: fixed; inset: 0; pointer-events: none; z-index: 0;
@@ -126,55 +136,99 @@ export default function NotesList() {
           opacity: 0.18;
         }
 
+        /* ── HEADER ── */
         .header {
-          position: relative; z-index: 1;
+          position: relative; z-index: 10;
           display: flex; align-items: center; justify-content: space-between;
-          margin-bottom: 2.5rem;
-          gap: 1rem;
+          margin-bottom: 1.75rem;
+          gap: 0.75rem;
         }
+
+        @media (min-width: 768px) {
+          .header { margin-bottom: 2.5rem; }
+        }
+
         .page-title {
           font-family: 'Lora', serif;
-          font-size: 2rem; font-weight: 700;
+          font-size: 1.6rem; font-weight: 700;
           color: #1a1714; letter-spacing: -0.02em;
+          line-height: 1.1;
         }
+
+        @media (min-width: 480px) {
+          .page-title { font-size: 1.85rem; }
+        }
+
+        @media (min-width: 768px) {
+          .page-title { font-size: 2rem; }
+        }
+
         .page-title em { font-style: italic; color: #c9a96e; }
 
         .header-right {
-          display: flex; align-items: center; gap: 10px;
+          display: flex; align-items: center; gap: 8px;
+          flex-shrink: 0;
         }
 
+        /* Add button — icon-only on mobile, full label on wider screens */
         .add-btn {
-          display: flex; align-items: center; gap: 8px;
+          display: flex; align-items: center; justify-content: center; gap: 6px;
           background: #1a1714; color: #faf8f4;
           border: none; border-radius: 12px;
-          padding: 0.75rem 1.25rem;
+          padding: 0.65rem 0.85rem;
           font-family: 'DM Sans', sans-serif;
           font-size: 0.875rem; font-weight: 600;
           letter-spacing: 0.03em; cursor: pointer;
           box-shadow: 0 4px 14px #1a171433;
           transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
+          min-height: 40px;
+          white-space: nowrap;
         }
+
+        @media (min-width: 480px) {
+          .add-btn { padding: 0.7rem 1.1rem; gap: 8px; }
+        }
+
+        @media (min-width: 768px) {
+          .add-btn { padding: 0.75rem 1.25rem; }
+        }
+
         .add-btn:hover { background: #2c2620; transform: translateY(-2px); box-shadow: 0 8px 22px #1a171444; }
         .add-btn:active { transform: translateY(0); }
 
+        .add-btn-label {
+          display: none;
+        }
+        @media (min-width: 400px) {
+          .add-btn-label { display: inline; }
+        }
+
         /* ── PROFILE ── */
-        .profile-wrap { position: relative; }
+        .profile-wrap { position: relative; z-index: 10; }
 
         .profile-avatar-btn {
-          width: 40px; height: 40px;
+          width: 38px; height: 38px;
           background: linear-gradient(135deg, #1a1714, #3a3028);
           border: 2.5px solid #e5dfd6;
           border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          font-size: 0.9rem; font-weight: 700;
+          font-size: 0.85rem; font-weight: 700;
           color: #c9a96e;
           cursor: pointer;
           box-shadow: 0 2px 8px #1a171420;
           transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
-          letter-spacing: 0;
           outline: none;
           position: relative;
+          -webkit-tap-highlight-color: transparent;
+          flex-shrink: 0;
         }
+
+        @media (min-width: 480px) {
+          .profile-avatar-btn { width: 40px; height: 40px; font-size: 0.9rem; }
+        }
+
         .profile-avatar-btn:hover {
           border-color: #c9a96e;
           transform: translateY(-1px);
@@ -184,8 +238,6 @@ export default function NotesList() {
           border-color: #c9a96e;
           box-shadow: 0 0 0 3px #c9a96e22, 0 4px 14px #1a171430;
         }
-
-        /* Online dot */
         .profile-avatar-btn::after {
           content: '';
           position: absolute; bottom: 1px; right: 1px;
@@ -207,12 +259,12 @@ export default function NotesList() {
           border: 1.5px solid #e5dfd6;
           border-radius: 16px;
           padding: 0.5rem;
-          min-width: 200px;
+          min-width: 190px;
           box-shadow:
             0 2px 0 #e8e0d4,
             0 6px 0 #ede6db,
             0 16px 40px #1a171428;
-          z-index: 100;
+          z-index: 200;
           animation: dropIn 0.2s cubic-bezier(.22,1,.36,1) both;
         }
 
@@ -223,33 +275,35 @@ export default function NotesList() {
           margin-bottom: 0.4rem;
         }
         .dropdown-avatar {
-          width: 36px; height: 36px; flex-shrink: 0;
+          width: 34px; height: 34px; flex-shrink: 0;
           background: linear-gradient(135deg, #1a1714, #3a3028);
           border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          font-size: 0.85rem; font-weight: 700;
+          font-size: 0.8rem; font-weight: 700;
           color: #c9a96e;
         }
-        .dropdown-info {}
         .dropdown-label {
-          font-size: 0.65rem; font-weight: 600;
+          font-size: 0.62rem; font-weight: 600;
           color: #b5ada4; letter-spacing: 0.09em;
           text-transform: uppercase; margin-bottom: 1px;
         }
         .dropdown-username {
-          font-size: 0.875rem; font-weight: 600;
+          font-size: 0.85rem; font-weight: 600;
           color: #1a1714;
+          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+          max-width: 110px;
         }
-
         .dropdown-item {
           display: flex; align-items: center; gap: 9px;
           width: 100%; background: none; border: none;
-          border-radius: 9px; padding: 0.6rem 0.75rem;
+          border-radius: 9px; padding: 0.65rem 0.75rem;
           font-family: 'DM Sans', sans-serif;
           font-size: 0.82rem; font-weight: 500;
           color: #6b635a; cursor: pointer;
           transition: background 0.15s, color 0.15s;
           text-align: left;
+          min-height: 40px;
+          -webkit-tap-highlight-color: transparent;
         }
         .dropdown-item:hover { background: #f0ece5; color: #1a1714; }
         .dropdown-item.danger { color: #c0392b; }
@@ -259,9 +313,23 @@ export default function NotesList() {
         .notes-list {
           list-style: none;
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-          gap: 1rem;
+          grid-template-columns: 1fr;
+          gap: 0.75rem;
           position: relative; z-index: 1;
+        }
+
+        @media (min-width: 480px) {
+          .notes-list {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.875rem;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .notes-list {
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+          }
         }
 
         @keyframes cardIn {
@@ -272,30 +340,66 @@ export default function NotesList() {
         .note-item {
           background: #faf8f4;
           border: 1.5px solid #e5dfd6;
-          border-radius: 16px;
-          padding: 1.25rem;
+          border-radius: 14px;
+          padding: 1rem;
           box-shadow: 0 2px 8px #1a171410;
           transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
           position: relative;
           animation: cardIn 0.35s cubic-bezier(.22,1,.36,1) both;
+          cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
         }
+
+        @media (min-width: 768px) {
+          .note-item {
+            border-radius: 16px;
+            padding: 1.25rem;
+          }
+        }
+
         .note-item:hover {
           transform: translateY(-3px);
           box-shadow: 0 8px 24px #1a171420;
           border-color: #cfc4b8;
-          cursor: pointer;
         }
-        .note-item:hover .note-actions { opacity: 1; }
+
+        /* Actions hidden on mobile, hover-only on desktop */
+        .note-actions {
+          position: absolute; top: 0.85rem; right: 0.85rem;
+          display: none; gap: 4px;
+        }
+
+        @media (min-width: 768px) {
+          .note-actions { display: flex; opacity: 0; transition: opacity 0.15s; }
+          .note-item:hover .note-actions { opacity: 1; }
+        }
+
+        .icon-btn {
+          background: #f0ece5; border: none;
+          border-radius: 8px; padding: 6px;
+          cursor: pointer; color: #9c9288; display: flex;
+          transition: background 0.15s, color 0.15s;
+          min-width: 30px; min-height: 30px;
+          align-items: center; justify-content: center;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .icon-btn:hover { background: #e5dfd6; color: #1a1714; }
+        .icon-btn.danger:hover { background: #fde8e8; color: #c0392b; }
 
         .note-title {
           font-family: 'Lora', serif;
-          font-size: 1rem; font-weight: 700;
+          font-size: 0.95rem; font-weight: 700;
           color: #1a1714; letter-spacing: -0.01em;
-          margin-bottom: 0.5rem;
-          padding-right: 3rem;
+          margin-bottom: 0.4rem;
+          line-height: 1.3;
         }
+
+        @media (min-width: 768px) {
+          .note-title { font-size: 1rem; padding-right: 3.5rem; }
+        }
+
         .note-body {
-          font-size: 0.825rem; color: #6b635a;
+          font-size: 0.8rem; color: #6b635a;
           font-weight: 300; line-height: 1.65;
           display: -webkit-box;
           -webkit-line-clamp: 3;
@@ -303,23 +407,14 @@ export default function NotesList() {
           overflow: hidden;
         }
 
-        .note-actions {
-          position: absolute; top: 1rem; right: 1rem;
-          display: flex; gap: 4px;
-          opacity: 0; transition: opacity 0.15s;
+        @media (min-width: 768px) {
+          .note-body { font-size: 0.825rem; }
         }
-        .icon-btn {
-          background: #f0ece5; border: none;
-          border-radius: 8px; padding: 5px;
-          cursor: pointer; color: #9c9288; display: flex;
-          transition: background 0.15s, color 0.15s;
-        }
-        .icon-btn:hover { background: #e5dfd6; color: #1a1714; }
-        .icon-btn.danger:hover { background: #fde8e8; color: #c0392b; }
 
+        /* Empty state */
         .empty {
           position: relative; z-index: 1;
-          text-align: center; padding: 5rem 2rem;
+          text-align: center; padding: 4rem 1.5rem;
         }
         .empty-icon {
           width: 52px; height: 52px;
@@ -334,34 +429,99 @@ export default function NotesList() {
         }
         .empty-sub { font-size: 0.82rem; color: #b5ada4; font-weight: 300; }
 
-        /* ── MODAL ── */
+        /* ── FAB (mobile floating add button) ── */
+        .fab {
+          display: flex;
+          position: fixed;
+          bottom: 1.5rem; right: 1.5rem;
+          z-index: 40;
+          background: #1a1714;
+          color: #faf8f4;
+          border: none; border-radius: 50%;
+          width: 54px; height: 54px;
+          align-items: center; justify-content: center;
+          box-shadow: 0 6px 20px #1a171455;
+          cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .fab:active { transform: scale(0.93); }
+
+        @media (min-width: 768px) {
+          .fab { display: none; }
+        }
+
+        /* ── MODALS ── */
         .overlay {
           position: fixed; inset: 0; z-index: 50;
           background: #1a171466;
           backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-          display: flex; align-items: center; justify-content: center;
-          padding: 2rem;
+          display: flex; align-items: flex-end; justify-content: center;
+          padding: 0;
           animation: overlayIn 0.2s ease both;
         }
-        .modal {
-          background: #faf8f4; border-radius: 20px;
-          padding: 2rem; width: 100%; max-width: 460px;
-          box-shadow: 0 2px 0 #e8e0d4, 0 8px 0 #ede6db, 0 24px 80px #1a171455;
-          animation: modalIn 0.3s cubic-bezier(.22,1,.36,1) both;
+
+        @media (min-width: 600px) {
+          .overlay {
+            align-items: center;
+            padding: 2rem;
+          }
         }
+
+        .modal {
+          background: #faf8f4;
+          border-radius: 20px 20px 0 0;
+          padding: 1.5rem 1.25rem 2rem;
+          width: 100%;
+          max-width: 100%;
+          box-shadow: 0 -4px 40px #1a171440;
+          animation: sheetUp 0.35s cubic-bezier(.22,1,.36,1) both;
+          max-height: 90dvh;
+          overflow-y: auto;
+        }
+
+        @media (min-width: 600px) {
+          .modal {
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 460px;
+            box-shadow: 0 2px 0 #e8e0d4, 0 8px 0 #ede6db, 0 24px 80px #1a171455;
+            animation: modalIn 0.3s cubic-bezier(.22,1,.36,1) both;
+            max-height: none;
+          }
+        }
+
+        /* Sheet drag handle on mobile */
+        .modal::before {
+          content: '';
+          display: block;
+          width: 36px; height: 4px;
+          background: #e0d9d0;
+          border-radius: 99px;
+          margin: 0 auto 1.25rem;
+        }
+
+        @media (min-width: 600px) {
+          .modal::before { display: none; }
+        }
+
         .modal-header {
           display: flex; align-items: center; justify-content: space-between;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.25rem;
         }
         .modal-title {
           font-family: 'Lora', serif;
-          font-size: 1.3rem; font-weight: 700;
+          font-size: 1.2rem; font-weight: 700;
           color: #1a1714; letter-spacing: -0.02em;
         }
         .modal-close {
           background: #f0ece5; border: none; border-radius: 8px;
-          padding: 6px; cursor: pointer; color: #9c9288; display: flex;
+          padding: 7px; cursor: pointer; color: #9c9288; display: flex;
           transition: background 0.15s, color 0.15s;
+          min-width: 34px; min-height: 34px;
+          align-items: center; justify-content: center;
+          -webkit-tap-highlight-color: transparent;
         }
         .modal-close:hover { background: #e5dfd6; color: #1a1714; }
 
@@ -370,49 +530,84 @@ export default function NotesList() {
           border: 1.5px solid #e5dfd6; border-radius: 12px;
           padding: 0.8rem 1rem;
           font-family: 'DM Sans', sans-serif;
-          font-size: 0.9rem; color: #1a1714; outline: none;
+          font-size: 1rem; /* 16px — prevents iOS zoom */
+          color: #1a1714; outline: none;
           transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
           margin-bottom: 0.75rem; -webkit-appearance: none; display: block;
+          appearance: none;
         }
+
+        @media (min-width: 600px) {
+          .modal input, .modal textarea { font-size: 0.9rem; }
+        }
+
         .modal input::placeholder, .modal textarea::placeholder { color: #c0b8ae; }
         .modal input:focus, .modal textarea:focus {
           border-color: #c9a96e; background: #fffefb;
           box-shadow: 0 0 0 3px #c9a96e33;
         }
         .modal textarea {
-          resize: none; min-height: 140px;
-          line-height: 1.65; margin-bottom: 1.5rem;
+          resize: none; min-height: 130px;
+          line-height: 1.65; margin-bottom: 1.25rem;
         }
         .modal-footer { display: flex; justify-content: flex-end; gap: 10px; }
 
         .btn-cancel {
           background: #f0ece5; border: none; border-radius: 10px;
-          padding: 0.7rem 1.2rem;
+          padding: 0.75rem 1.1rem;
           font-family: 'DM Sans', sans-serif;
           font-size: 0.875rem; font-weight: 500;
           color: #6b635a; cursor: pointer; transition: background 0.15s;
+          min-height: 44px;
+          -webkit-tap-highlight-color: transparent;
         }
         .btn-cancel:hover { background: #e5dfd6; }
 
         .btn-save {
           background: #1a1714; border: none; border-radius: 10px;
-          padding: 0.7rem 1.4rem;
+          padding: 0.75rem 1.25rem;
           font-family: 'DM Sans', sans-serif;
           font-size: 0.875rem; font-weight: 600; color: #faf8f4;
           cursor: pointer; box-shadow: 0 4px 14px #1a171433;
           display: flex; align-items: center; gap: 7px;
           transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+          min-height: 44px;
+          -webkit-tap-highlight-color: transparent;
         }
         .btn-save:hover { background: #2c2620; transform: translateY(-1px); box-shadow: 0 6px 18px #1a171444; }
         .btn-save:active { transform: translateY(0); }
 
+        /* Delete modal */
         .delete-modal {
-          background: #faf8f4; border-radius: 18px;
-          padding: 1.75rem; width: 100%; max-width: 340px;
+          background: #faf8f4;
+          border-radius: 20px 20px 0 0;
+          padding: 1.5rem 1.5rem 2.5rem;
+          width: 100%; max-width: 100%;
           text-align: center;
-          box-shadow: 0 2px 0 #e8e0d4, 0 8px 0 #ede6db, 0 24px 60px #1a171455;
-          animation: modalIn 0.3s cubic-bezier(.22,1,.36,1) both;
+          box-shadow: 0 -4px 40px #1a171440;
+          animation: sheetUp 0.35s cubic-bezier(.22,1,.36,1) both;
         }
+
+        @media (min-width: 600px) {
+          .delete-modal {
+            border-radius: 18px;
+            padding: 1.75rem;
+            max-width: 340px;
+            box-shadow: 0 2px 0 #e8e0d4, 0 8px 0 #ede6db, 0 24px 60px #1a171455;
+            animation: modalIn 0.3s cubic-bezier(.22,1,.36,1) both;
+          }
+          .delete-modal::before { display: none; }
+        }
+
+        .delete-modal::before {
+          content: '';
+          display: block;
+          width: 36px; height: 4px;
+          background: #e0d9d0;
+          border-radius: 99px;
+          margin: 0 auto 1.25rem;
+        }
+
         .delete-icon {
           width: 48px; height: 48px; background: #fde8e8;
           border-radius: 12px; display: flex; align-items: center; justify-content: center;
@@ -425,9 +620,11 @@ export default function NotesList() {
         .delete-sub { font-size: 0.8rem; color: #9c9288; margin-bottom: 1.25rem; line-height: 1.5; }
         .btn-delete {
           background: #c0392b; border: none; border-radius: 10px;
-          padding: 0.7rem 1.2rem;
+          padding: 0.75rem 1.2rem;
           font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 600;
           color: #fff; cursor: pointer; transition: background 0.2s;
+          min-height: 44px;
+          -webkit-tap-highlight-color: transparent;
         }
         .btn-delete:hover { background: #a93226; }
 
@@ -435,6 +632,10 @@ export default function NotesList() {
         @keyframes modalIn {
           from { opacity: 0; transform: translateY(24px) scale(0.97); }
           to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes sheetUp {
+          from { opacity: 0; transform: translateY(100%); }
+          to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
 
@@ -445,11 +646,14 @@ export default function NotesList() {
           <h1 className="page-title">Apex <em>Notes</em></h1>
 
           <div className="header-right">
-            <button className="add-btn" onClick={openAdd}>
+            {/* Add button — hidden on mobile (FAB used instead) */}
+            <button className="add-btn" onClick={openAdd} style={{ display: 'none' }}
+              ref={el => { if (el) el.style.display = 'flex' }}
+            >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
               </svg>
-              Add Note
+              <span className="add-btn-label">Add Note</span>
             </button>
 
             {/* Profile avatar */}
@@ -463,23 +667,24 @@ export default function NotesList() {
               </button>
 
               {profileOpen && (
-                <div className="profile-dropdown">
+                <>
+                  <div
+                    style={{ position: 'fixed', inset: 0, zIndex: 150 }}
+                    onClick={() => setProfileOpen(false)}
+                  />
+                  <div className="profile-dropdown" style={{ zIndex: 200 }}>
                   <div className="dropdown-header">
                     <div className="dropdown-avatar">{initial}</div>
-                    <div className="dropdown-info">
+                    <div>
                       <div className="dropdown-label">Signed in as</div>
                       <div className="dropdown-username">@{username}</div>
                     </div>
                   </div>
-                  <button className="dropdown-item danger cursor-pointer" onClick={handleLogout}>
-                    {/* <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                      <polyline points="16 17 21 12 16 7"/>
-                      <line x1="21" y1="12" x2="9" y2="12"/>
-                    </svg> */}
+                  <button className="dropdown-item danger" onClick={handleLogout}>
                     Logout
                   </button>
-                </div>
+                  </div>
+                </>
               )}
             </div>
           </div>
@@ -495,7 +700,7 @@ export default function NotesList() {
               </svg>
             </div>
             <div className="empty-title">No notes yet</div>
-            <div className="empty-sub">Click Add Note to get started</div>
+            <div className="empty-sub">Tap + to create your first note</div>
           </div>
         ) : (
           <ul className="notes-list">
@@ -523,6 +728,13 @@ export default function NotesList() {
           </ul>
         )}
 
+        {/* FAB — mobile only */}
+        <button className="fab" onClick={openAdd} aria-label="Add note">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
+
         {/* View Modal */}
         {selectedNote && (
           <div className="overlay" onClick={() => setSelectedNote(null)}>
@@ -540,7 +752,7 @@ export default function NotesList() {
               <p style={{
                 fontSize: '0.925rem', color: '#4a3f38', lineHeight: 1.75,
                 fontWeight: 300, whiteSpace: 'pre-wrap', wordBreak: 'break-word',
-                overflowWrap: 'break-word', maxHeight: '60vh', overflowY: 'auto',
+                overflowWrap: 'break-word', maxHeight: '55dvh', overflowY: 'auto',
                 padding: '0.25rem 0 0.5rem',
               }}>
                 {selectedNote.description}

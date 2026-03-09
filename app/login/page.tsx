@@ -50,6 +50,7 @@ export default function Login() {
         .root {
           font-family: 'DM Sans', sans-serif;
           min-height: 100vh;
+          min-height: 100dvh;
           background: #e8e4dc;
           background-image:
             radial-gradient(circle at 15% 50%, #ddd8ce 0%, transparent 55%),
@@ -58,12 +59,16 @@ export default function Login() {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 2rem;
+          padding: 1.25rem;
           position: relative;
           overflow: hidden;
         }
 
-        /* Dot grid — matches screenshot */
+        @media (min-width: 480px) {
+          .root { padding: 2rem; }
+        }
+
+        /* Dot grid */
         .root::after {
           content: '';
           position: fixed; inset: 0;
@@ -102,87 +107,63 @@ export default function Login() {
             0 6px 0 #e8e3da,
             0 2px 40px #0000001a,
             0 20px 60px #00000012;
-          padding: 2.5rem 2.25rem 2.25rem;
-          width: 100%; max-width: 430px;
+          padding: 2rem 1.5rem 1.75rem;
+          width: 100%;
+          max-width: 430px;
           animation: fadeUp 0.6s cubic-bezier(.22,1,.36,1) both;
         }
+
+        @media (min-width: 480px) {
+          .card {
+            padding: 2.5rem 2.25rem 2.25rem;
+          }
+        }
+
         .card.shaking {
           animation: shake 0.45s cubic-bezier(.36,.07,.19,.97) both;
         }
 
-        /* Logo icon — matches dark rounded square */
-        .logo-wrap {
-          margin-bottom: 1.6rem;
-        }
+        .logo-wrap { margin-bottom: 1.4rem; }
+
         .logo-icon {
-          width: 52px; height: 52px;
+          width: 46px; height: 46px;
           background: #1a1714;
-          border-radius: 14px;
+          border-radius: 13px;
           display: flex; align-items: center; justify-content: center;
           box-shadow: 0 4px 16px #1a171422;
         }
 
-        /* Headline — Lora serif with italic second line, matches screenshot exactly */
+        @media (min-width: 480px) {
+          .logo-icon { width: 52px; height: 52px; border-radius: 14px; }
+          .logo-wrap { margin-bottom: 1.6rem; }
+        }
+
         .headline {
           font-family: 'Lora', serif;
-          font-size: 2rem;
+          font-size: 1.65rem;
           font-weight: 700;
           color: #1a1714;
           line-height: 1.15;
           letter-spacing: -0.02em;
-          margin-bottom: 0.45rem;
+          margin-bottom: 0.4rem;
         }
-        .headline em {
-          font-style: italic;
-          font-weight: 600;
+
+        @media (min-width: 480px) {
+          .headline { font-size: 2rem; }
         }
+
+        .headline em { font-style: italic; font-weight: 600; }
+
         .subline {
-          font-size: 0.875rem;
+          font-size: 0.85rem;
           color: #9c9288;
           font-weight: 300;
-          margin-bottom: 1.75rem;
+          margin-bottom: 1.5rem;
           line-height: 1.5;
         }
 
-        /* Social buttons */
-        .social-row {
-          display: grid; grid-template-columns: 1fr 1fr;
-          gap: 10px;
-          margin-bottom: 1.4rem;
-        }
-        .social-btn {
-          display: flex; align-items: center; justify-content: center; gap: 8px;
-          background: #f0ece5;
-          border: 1.5px solid #e5dfd6;
-          border-radius: 10px;
-          padding: 0.7rem 1rem;
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.875rem;
-          font-weight: 500;
-          color: #3a3530;
-          cursor: pointer;
-          transition: background 0.18s, border-color 0.18s, transform 0.15s;
-          text-decoration: none;
-        }
-        .social-btn:hover {
-          background: #ebe5dd;
-          border-color: #d8d0c5;
-          transform: translateY(-1px);
-        }
-
-        /* Divider */
-        .divider {
-          display: flex; align-items: center; gap: 12px;
-          margin-bottom: 1.4rem;
-        }
-        .div-line { flex: 1; height: 1px; background: #e0d9d0; }
-        .div-text {
-          font-size: 0.7rem;
-          color: #b5ada4;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          font-weight: 500;
-          white-space: nowrap;
+        @media (min-width: 480px) {
+          .subline { font-size: 0.875rem; margin-bottom: 1.75rem; }
         }
 
         /* Error */
@@ -199,11 +180,20 @@ export default function Login() {
         }
 
         /* Fields */
-        .fields { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.25rem; }
+        .fields {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        @media (min-width: 480px) {
+          .fields { margin-bottom: 1.25rem; }
+        }
 
         .field-label {
           display: block;
-          font-size: 0.72rem;
+          font-size: 0.7rem;
           font-weight: 600;
           color: #6b635a;
           letter-spacing: 0.09em;
@@ -211,29 +201,40 @@ export default function Login() {
           margin-bottom: 6px;
         }
 
+        @media (min-width: 480px) {
+          .field-label { font-size: 0.72rem; }
+        }
+
         .input-wrap {
           position: relative;
           border-radius: 12px;
           transition: box-shadow 0.2s;
         }
-        .input-wrap.focused {
-          box-shadow: 0 0 0 3px #c9a96e33;
-        }
+        .input-wrap.focused { box-shadow: 0 0 0 3px #c9a96e33; }
 
         .field-input {
           width: 100%;
           background: #f0ece5;
           border: 1.5px solid #e5dfd6;
           border-radius: 12px;
-          padding: 0.8rem 1rem 0.8rem 2.75rem;
+          padding: 0.75rem 1rem 0.75rem 2.6rem;
           font-family: 'DM Sans', sans-serif;
-          font-size: 0.9rem;
+          font-size: 1rem; /* 16px — prevents iOS zoom */
           font-weight: 400;
           color: #1a1714;
           outline: none;
           transition: border-color 0.2s, background 0.2s;
           -webkit-appearance: none;
+          appearance: none;
         }
+
+        @media (min-width: 480px) {
+          .field-input {
+            padding: 0.8rem 1rem 0.8rem 2.75rem;
+            font-size: 0.9rem;
+          }
+        }
+
         .field-input::placeholder { color: #c0b8ae; }
         .field-input:focus {
           border-color: #c9a96e;
@@ -242,47 +243,60 @@ export default function Login() {
 
         .field-ico {
           position: absolute;
-          left: 0.875rem; top: 50%;
+          left: 0.8rem; top: 50%;
           transform: translateY(-50%);
           color: #c0b8ae;
           pointer-events: none;
           transition: color 0.2s;
+          display: flex;
+          align-items: center;
         }
         .input-wrap.focused .field-ico { color: #c9a96e; }
 
         .pw-toggle {
           position: absolute;
-          right: 0.875rem; top: 50%;
+          right: 0.75rem; top: 50%;
           transform: translateY(-50%);
           background: none; border: none;
           cursor: pointer; color: #c0b8ae;
-          padding: 4px; display: flex;
+          padding: 6px; display: flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 32px; min-height: 32px;
           transition: color 0.2s;
+          -webkit-tap-highlight-color: transparent;
         }
         .pw-toggle:hover { color: #6b635a; }
 
         /* Forgot */
         .forgot {
           text-align: right;
-          margin-top: -0.5rem;
-          margin-bottom: 1.25rem;
+          margin-top: -0.25rem;
+          margin-bottom: 1.1rem;
         }
+
+        @media (min-width: 480px) {
+          .forgot { margin-top: -0.5rem; margin-bottom: 1.25rem; }
+        }
+
         .forgot a {
           font-size: 0.75rem;
           color: #9c9288;
           text-decoration: none;
           transition: color 0.2s;
+          padding: 4px 0; /* larger tap area */
+          display: inline-block;
         }
         .forgot a:hover { color: #c9a96e; }
 
-        /* Submit — dark pill, matches screenshot */
+        /* Submit */
         .submit-btn {
           width: 100%;
           background: #1a1714;
           color: #faf8f4;
           border: none;
           border-radius: 12px;
-          padding: 0.95rem 1rem;
+          padding: 0.9rem 1rem;
           font-family: 'DM Sans', sans-serif;
           font-size: 0.875rem;
           font-weight: 600;
@@ -292,7 +306,15 @@ export default function Login() {
           display: flex; align-items: center; justify-content: center; gap: 8px;
           transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
           box-shadow: 0 4px 16px #1a171433;
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
+          min-height: 48px;
         }
+
+        @media (min-width: 480px) {
+          .submit-btn { padding: 0.95rem 1rem; }
+        }
+
         .submit-btn:hover:not(:disabled) {
           background: #2c2620;
           transform: translateY(-2px);
@@ -307,16 +329,22 @@ export default function Login() {
           border-top-color: #fff;
           border-radius: 50%;
           animation: spin 0.7s linear infinite;
+          flex-shrink: 0;
         }
 
         /* Footer */
         .footer {
           text-align: center;
-          margin-top: 1.4rem;
-          font-size: 0.8rem;
+          margin-top: 1.25rem;
+          font-size: 0.78rem;
           color: #b5ada4;
-          line-height: 1.6;
+          line-height: 1.7;
         }
+
+        @media (min-width: 480px) {
+          .footer { margin-top: 1.4rem; font-size: 0.8rem; }
+        }
+
         .footer a {
           color: #6b635a;
           text-decoration: underline;
@@ -333,8 +361,7 @@ export default function Login() {
           {/* Logo */}
           <div className="logo-wrap">
             <div className="logo-icon">
-              {/* Layers icon matching screenshot */}
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                 <path d="M12 2L2 7l10 5 10-5-10-5z" fill="#c9a96e"/>
                 <path d="M2 12l10 5 10-5" stroke="#c9a96e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M2 17l10 5 10-5" stroke="#c9a96e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.6"/>
@@ -347,32 +374,6 @@ export default function Login() {
             Welcome<br /><em>back.</em>
           </h1>
           <p className="subline">Sign in to pick up where you left off.</p>
-
-          {/* Social */}
-          <div className="social-row">
-            <button className="social-btn" type="button">
-              <svg width="16" height="16" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-              </svg>
-              Google
-            </button>
-            <button className="social-btn" type="button">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#1a1714">
-                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-              </svg>
-              GitHub
-            </button>
-          </div>
-
-          {/* Divider */}
-          <div className="divider">
-            <div className="div-line"/>
-            <span className="div-text">or continue with email</span>
-            <div className="div-line"/>
-          </div>
 
           {/* Error */}
           {error && (
@@ -427,7 +428,12 @@ export default function Login() {
                     onBlur={() => setFocused(null)}
                     style={{ paddingRight: '2.75rem' }}
                   />
-                  <button type="button" className="pw-toggle" onClick={() => setShowPassword(p => !p)} aria-label="Toggle password">
+                  <button
+                    type="button"
+                    className="pw-toggle"
+                    onClick={() => setShowPassword(p => !p)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
                     {showPassword
                       ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
                       : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
