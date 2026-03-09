@@ -89,6 +89,7 @@ export default function NotesList() {
     await fetch("/api/logout", { method: "POST" })
     localStorage.removeItem("token")
     localStorage.removeItem("username")
+    document.cookie = 'token=; path=/; max-age=0'
     router.push("/")
   }
 

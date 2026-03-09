@@ -4,423 +4,473 @@ export default function Home() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .page { font-family: 'DM Sans', sans-serif; }
+        :root {
+          --ink: #1a1714;
+          --gold: #c9a96e;
+          --cream: #faf8f4;
+          --warm: #e8e4dc;
+          --muted: #9c9288;
+          --border: #e5dfd6;
+        }
+
+        body { background: var(--warm); }
 
         @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(28px); }
+          from { opacity: 0; transform: translateY(24px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
-        @keyframes slideRight {
-          from { transform: scaleX(0); }
-          to   { transform: scaleX(1); }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50%       { transform: translateY(-12px) rotate(2deg); }
+          0%, 100% { transform: translateY(0) rotate(-1deg); }
+          50%       { transform: translateY(-10px) rotate(0.5deg); }
         }
-        @keyframes pulse-ring {
-          0%   { transform: scale(1);   opacity: 0.4; }
-          100% { transform: scale(1.6); opacity: 0; }
+        @keyframes pen-write {
+          0%   { stroke-dashoffset: 120; }
+          100% { stroke-dashoffset: 0; }
         }
-
-        .anim-1 { animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.1s both; }
-        .anim-2 { animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.25s both; }
-        .anim-3 { animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.4s both; }
-        .anim-4 { animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.55s both; }
-        .anim-5 { animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.7s both; }
-        .anim-panel { animation: fadeIn 1s ease 0s both; }
-
-        .divider-line {
-          width: 56px; height: 2px;
-          background: #c9a96e;
-          transform-origin: left;
-          animation: slideRight 0.8s cubic-bezier(.22,1,.36,1) 0.3s both;
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0; }
         }
 
-        .floating-card {
-          animation: float 6s ease-in-out infinite;
-        }
+        .a1 { animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.05s both; }
+        .a2 { animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.18s both; }
+        .a3 { animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.31s both; }
+        .a4 { animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.44s both; }
+        .a5 { animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.57s both; }
+        .a6 { animation: fadeUp 0.7s cubic-bezier(.22,1,.36,1) 0.7s both; }
 
-        /* ── BUTTONS ── */
-        .btn-primary {
-          position: relative;
-          display: block;
-          width: 100%;
-          background: #1a1a2e;
-          color: #fff;
+        .root {
           font-family: 'DM Sans', sans-serif;
-          font-weight: 500;
-          font-size: 0.875rem;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          text-align: center;
-          padding: 1rem 2rem;
-          border-radius: 4px;
-          text-decoration: none;
-          transition: background 0.25s, box-shadow 0.25s, transform 0.2s;
-          overflow: hidden;
-          min-height: 48px;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .btn-primary::before {
-          content: '';
-          position: absolute; inset: 0;
-          background: linear-gradient(135deg, #c9a96e22 0%, transparent 60%);
-          opacity: 0; transition: opacity 0.3s;
-        }
-        .btn-primary:hover { background: #16213e; transform: translateY(-2px); box-shadow: 0 12px 32px #1a1a2e33; }
-        .btn-primary:hover::before { opacity: 1; }
-
-        /* ── BADGE ── */
-        .badge {
-          display: inline-flex; align-items: center; gap: 6px;
-          background: #fdf6ec; border: 1px solid #e8d5b0;
-          border-radius: 999px;
-          padding: 4px 12px;
-          font-size: 0.7rem;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: #b8892a;
-          font-weight: 500;
-        }
-        .badge-dot {
-          width: 6px; height: 6px;
-          background: #c9a96e; border-radius: 50%;
-          position: relative;
-        }
-        .badge-dot::after {
-          content: '';
-          position: absolute; inset: 0;
-          border-radius: 50%; background: #c9a96e;
-          animation: pulse-ring 1.5s ease-out infinite;
-        }
-
-        /* ── FEATURES ── */
-        .feature-item {
-          display: flex; align-items: flex-start; gap: 12px;
-          padding: 12px 0;
-          border-bottom: 1px solid #f0ece4;
-        }
-        .feature-icon {
-          width: 32px; height: 32px; flex-shrink: 0;
-          background: #fdf6ec; border-radius: 8px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 14px;
-        }
-
-        /* ── SOCIAL PROOF ── */
-        .social-proof { display: flex; align-items: center; gap: 10px; }
-        .avatars { display: flex; }
-        .avatar {
-          width: 28px; height: 28px;
-          border-radius: 50%; border: 2px solid #fff;
-          margin-right: -8px;
-          font-size: 11px;
-          display: flex; align-items: center; justify-content: center;
-          font-weight: 600; color: #fff;
-        }
-
-        /* ── RIGHT PANEL ── */
-        .right-panel {
-          background: linear-gradient(145deg, #f8f4ee 0%, #ede8df 100%);
+          min-height: 100vh; min-height: 100dvh;
+          background: var(--warm);
           position: relative; overflow: hidden;
         }
-        .right-panel::before {
+
+        .root::before {
           content: '';
-          position: absolute; top: -80px; right: -80px;
-          width: 320px; height: 320px;
-          background: radial-gradient(circle, #c9a96e18 0%, transparent 70%);
-          pointer-events: none;
-        }
-        .right-panel::after {
-          content: '';
-          position: absolute; bottom: -60px; left: -60px;
-          width: 240px; height: 240px;
-          background: radial-gradient(circle, #1a1a2e0d 0%, transparent 70%);
-          pointer-events: none;
+          position: fixed; inset: 0; pointer-events: none; z-index: 0;
+          background-image: radial-gradient(circle, #b0aa9f 1px, transparent 1px);
+          background-size: 24px 24px; opacity: 0.22;
         }
 
-        .grain {
-          position: fixed; inset: 0; pointer-events: none; z-index: 99;
-          opacity: 0.025;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-        }
-
-        /* ── LAYOUT ── */
         .page-grid {
-          min-height: 100vh;
-          min-height: 100dvh;
-          display: flex;
-          flex-direction: column;
+          position: relative; z-index: 1;
+          min-height: 100vh; min-height: 100dvh;
+          display: flex; flex-direction: column;
         }
-
         @media (min-width: 768px) {
-          .page-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-          }
+          .page-grid { display: grid; grid-template-columns: 1fr 1fr; }
         }
 
-        /* Left panel */
+        /* ── LEFT ── */
         .left-panel {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
+          display: flex; flex-direction: column; justify-content: space-between;
+          background: var(--cream);
           padding: 1.5rem 1.25rem;
-          background: #fff;
           min-height: 100dvh;
+          border-right: 1.5px solid var(--border);
         }
-
-        @media (min-width: 480px) {
-          .left-panel { padding: 2rem 2rem; }
-        }
-
-        @media (min-width: 768px) {
-          .left-panel { padding: 3rem 4rem; min-height: 100vh; }
-        }
+        @media (min-width: 480px) { .left-panel { padding: 2rem; } }
+        @media (min-width: 768px) { .left-panel { padding: 3rem 4rem; min-height: 100vh; } }
 
         .left-content {
-          max-width: 400px;
-          width: 100%;
-          margin: 0 auto;
-          padding: 1.5rem 0;
+          max-width: 400px; width: 100%;
+          margin: 0 auto; padding: 1.5rem 0;
+        }
+        @media (min-width: 768px) { .left-content { padding: 0; } }
+
+        .top-nav { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo-icon {
+          width: 36px; height: 36px; background: var(--ink); border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          box-shadow: 0 3px 10px #1a171422;
+        }
+        .logo-text {
+          font-family: 'Lora', serif; font-weight: 700; font-size: 1.05rem;
+          color: var(--ink); letter-spacing: -0.01em;
+        }
+        .logo-text span { color: var(--gold); font-style: italic; }
+
+        .nav-tag {
+          font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em;
+          text-transform: uppercase; color: var(--muted);
+          background: var(--warm); border: 1px solid var(--border);
+          border-radius: 999px; padding: 3px 10px;
         }
 
-        @media (min-width: 768px) {
-          .left-content { padding: 0; }
-        }
+        .tagline-wrap { margin: 2rem 0 1.5rem; }
 
-        /* Right panel — hidden on mobile */
-        .right-panel-wrap {
-          display: none;
+        .note-label {
+          display: inline-flex; align-items: center; gap: 6px;
+          font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
+          text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
         }
+        .note-label-line { width: 24px; height: 1.5px; background: var(--gold); border-radius: 99px; }
 
+        .headline {
+          font-family: 'Lora', serif;
+          font-size: clamp(1.9rem, 7vw, 2.6rem);
+          font-weight: 700; line-height: 1.15;
+          color: var(--ink); letter-spacing: -0.025em; margin-bottom: 1rem;
+        }
+        .headline em { font-style: italic; color: var(--gold); }
+
+        .subline { font-size: 0.9rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
+
+        .features { margin: 1.75rem 0; display: flex; flex-direction: column; }
+
+        .feature {
+          display: flex; align-items: flex-start; gap: 12px;
+          padding: 0.85rem 0; border-bottom: 1px solid #f0ece5;
+        }
+        .feature:last-child { border-bottom: none; }
+
+        .feature-dot {
+          width: 28px; height: 28px; flex-shrink: 0;
+          background: var(--warm); border: 1.5px solid var(--border);
+          border-radius: 8px; display: flex; align-items: center; justify-content: center;
+          margin-top: 1px;
+        }
+        .feature-title { font-size: 0.82rem; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+        .feature-desc { font-size: 0.77rem; color: var(--muted); font-weight: 300; line-height: 1.5; }
+
+        .cta-wrap { display: flex; flex-direction: column; gap: 10px; }
+
+        .btn-primary {
+          display: flex; align-items: center; justify-content: center; gap: 8px;
+          background: var(--ink); color: var(--cream);
+          font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 600;
+          letter-spacing: 0.04em; padding: 0.95rem 2rem; border-radius: 14px;
+          text-decoration: none;
+          transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+          box-shadow: 0 4px 18px #1a171422; min-height: 52px;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .btn-primary:hover { background: #2c2620; transform: translateY(-2px); box-shadow: 0 10px 28px #1a171433; }
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-secondary {
+          display: flex; align-items: center; justify-content: center; gap: 6px;
+          background: transparent; color: var(--muted);
+          font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500;
+          text-decoration: none; padding: 0.65rem;
+          transition: color 0.2s; -webkit-tap-highlight-color: transparent;
+        }
+        .btn-secondary:hover { color: var(--ink); }
+
+        .proof { display: flex; align-items: center; gap: 10px; margin-top: 1.5rem; }
+        .proof-avatars { display: flex; }
+        .proof-avatar {
+          width: 26px; height: 26px; border-radius: 50%;
+          border: 2px solid var(--cream); margin-right: -7px;
+          font-size: 10px; font-weight: 700; color: #fff;
+          display: flex; align-items: center; justify-content: center;
+        }
+        .proof-text { font-size: 0.72rem; color: var(--muted); font-weight: 300; }
+        .proof-text strong { color: var(--ink); font-weight: 600; }
+
+        .page-footer {
+          font-size: 0.68rem; color: #c0b8ae; letter-spacing: 0.04em;
+          padding-top: 1rem; border-top: 1px solid var(--border);
+        }
+        @media (min-width: 768px) { .page-footer { border-top: none; padding-top: 0; } }
+        .page-footer a { color: #c0b8ae; text-decoration: underline; text-underline-offset: 3px; }
+        .page-footer a:hover { color: var(--gold); }
+
+        /* ── RIGHT PANEL ── */
+        .right-panel-wrap { display: none; }
         @media (min-width: 768px) {
           .right-panel-wrap {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 3rem;
-            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            padding: 3rem; position: relative; background: var(--warm);
           }
         }
 
-        /* Top nav */
-        .top-nav {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+        .deco-circle {
+          position: absolute; border: 1.5px solid var(--border);
+          border-radius: 50%; opacity: 0.5;
         }
 
-        .nav-est {
-          font-size: 0.7rem;
-          color: #999;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
+        /* notebook */
+        .notebook {
+          position: relative; width: 100%; max-width: 320px;
+          animation: float 7s ease-in-out infinite;
+        }
+        .notebook::after {
+          content: ''; position: absolute; bottom: -24px; left: 10%; right: 10%;
+          height: 20px;
+          background: radial-gradient(ellipse, #1a171433 0%, transparent 70%);
+          border-radius: 50%;
         }
 
-        /* Headline */
-        .headline {
-          font-family: "'Playfair Display', serif";
-          font-size: clamp(2rem, 8vw, 2.75rem);
-          font-weight: 900;
-          line-height: 1.1;
-          color: #1a1a2e;
-          letter-spacing: -0.02em;
-          margin-bottom: 1rem;
+        .nb-cover {
+          background: var(--ink); border-radius: 16px 4px 4px 16px;
+          padding: 1.5rem;
+          box-shadow: 4px 0 0 #2c2620, 8px 0 0 #3a3028, 0 32px 80px #1a171440;
+          position: relative; overflow: hidden;
+        }
+        .nb-cover::before {
+          content: ''; position: absolute; inset: 0;
+          background: repeating-linear-gradient(0deg, transparent, transparent 28px, #ffffff08 28px, #ffffff08 29px);
+          pointer-events: none;
         }
 
-        @media (min-width: 768px) {
-          .headline { font-size: clamp(2rem, 3.5vw, 2.75rem); }
+        .nb-top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+        .nb-badge {
+          display: inline-flex; align-items: center; gap: 5px;
+          background: #ffffff14; border: 1px solid #ffffff18;
+          border-radius: 999px; padding: 3px 10px;
+          font-size: 0.62rem; font-weight: 600; letter-spacing: 0.08em;
+          text-transform: uppercase; color: var(--gold);
+        }
+        .nb-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; }
+
+        .nb-title-area { margin-bottom: 1.25rem; }
+        .nb-title {
+          font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 700;
+          color: var(--cream); letter-spacing: -0.01em; margin-bottom: 0.3rem; line-height: 1.3;
+        }
+        .nb-subtitle { font-size: 0.7rem; color: #9c9288; font-weight: 300; }
+
+        .nb-lines { display: flex; flex-direction: column; }
+        .nb-line-row {
+          display: flex; align-items: center; gap: 8px;
+          padding: 6px 0; border-bottom: 1px solid #ffffff0c;
+        }
+        .nb-line-bullet { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+        .nb-line-text { height: 2px; border-radius: 99px; background: #ffffff18; flex: 1; }
+        .nb-line-tag {
+          font-size: 0.58rem; font-weight: 600; letter-spacing: 0.06em;
+          text-transform: uppercase; padding: 2px 6px; border-radius: 4px; flex-shrink: 0;
         }
 
-        /* Footer */
-        .page-footer {
-          font-size: 0.7rem;
-          color: #bbb;
-          letter-spacing: 0.04em;
-          margin-top: 1.5rem;
-          padding-top: 1rem;
-          border-top: 1px solid #f5f5f5;
+        .sticky-note {
+          position: absolute; background: #fef9c3; border-radius: 4px;
+          padding: 10px 12px; box-shadow: 2px 4px 14px #1a171428;
+          font-size: 0.68rem; font-weight: 400; color: #78716c; line-height: 1.5; max-width: 130px;
+        }
+        .sticky-note.pink { background: #fce7f3; }
+        .sticky-title { font-weight: 600; font-size: 0.65rem; color: #1a1714; margin-bottom: 3px; letter-spacing: -0.01em; }
+        .sticky-1 { top: -18px; right: -20px; transform: rotate(4deg); animation: float 8s ease-in-out 1s infinite; z-index: 10; }
+        .sticky-2 { bottom: 30px; right: -30px; transform: rotate(-3deg); animation: float 9s ease-in-out 2s infinite; z-index: 10; }
+
+        .count-pill {
+          position: absolute; top: -10px; left: -14px;
+          background: var(--gold); color: var(--ink);
+          font-size: 0.65rem; font-weight: 700;
+          padding: 4px 10px; border-radius: 999px;
+          box-shadow: 0 4px 12px #c9a96e44; white-space: nowrap; z-index: 10;
         }
 
-        @media (min-width: 768px) {
-          .page-footer { border-top: none; margin-top: 0; padding-top: 0; }
+        .pen-line {
+          stroke: var(--gold); stroke-width: 2.5; stroke-linecap: round;
+          fill: none; stroke-dasharray: 120;
+          animation: pen-write 2s ease 1s both;
+        }
+
+        .cursor {
+          display: inline-block; width: 2px; height: 13px;
+          background: var(--gold); border-radius: 1px; margin-left: 2px;
+          animation: blink 1s ease infinite; vertical-align: middle;
         }
       `}</style>
 
-      <div className="grain" />
+      <div className="root">
+        <main className="page-grid">
 
-      <main className="page page-grid">
+          {/* ── LEFT ── */}
+          <div className="left-panel">
 
-        {/* ── LEFT: Auth Panel ── */}
-        <div className="left-panel">
-
-          {/* Top nav */}
-          <div className="anim-1 top-nav">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div style={{
-                width: 36, height: 36,
-                background: '#1a1a2e', borderRadius: 8,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <span style={{ color: '#c9a96e', fontFamily: "'Playfair Display', serif", fontWeight: 900, fontSize: 18 }}>A</span>
+            <div className="a1 top-nav">
+              <div className="logo">
+                <div className="logo-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="2.5" strokeLinecap="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                  </svg>
+                </div>
+                <span className="logo-text">Apex <span>Notes</span></span>
               </div>
-              <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '1.1rem', color: '#1a1a2e', letterSpacing: '-0.01em' }}>Apex</span>
+              <span className="nav-tag">Beta</span>
             </div>
-            <span className="nav-est">est. 2025</span>
+
+            <div className="left-content">
+
+              <div className="a2 tagline-wrap">
+                <div className="note-label">
+                  <span className="note-label-line" />
+                  Your personal notebook
+                </div>
+                <h1 className="headline">
+                  Capture every<br />thought, <em>beautifully.</em>
+                </h1>
+                <p className="subline">
+                  Write, organize and revisit your notes in a clean, distraction-free space. Simple as pen and paper — but smarter.
+                </p>
+              </div>
+
+              <div className="a3 features">
+                {[
+                  {
+                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="2.5" strokeLinecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>,
+                    title: 'Write freely',
+                    desc: 'Create and edit notes with a clean, focused editor'
+                  },
+                  {
+                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="2.5" strokeLinecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>,
+                    title: 'Stay organized',
+                    desc: 'All your notes in one place, always easy to find'
+                  },
+                  {
+                    icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="2.5" strokeLinecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+                    title: 'Private & secure',
+                    desc: 'Your notes are protected with JWT authentication'
+                  },
+                ].map(f => (
+                  <div key={f.title} className="feature">
+                    <div className="feature-dot">{f.icon}</div>
+                    <div>
+                      <div className="feature-title">{f.title}</div>
+                      <div className="feature-desc">{f.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="a4 cta-wrap">
+                <Link href="/signup" className="btn-primary">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  Start writing for free
+                </Link>
+                <Link href="/login" className="btn-secondary">
+                  Already have an account? <strong style={{ color: '#1a1714' }}>Sign in →</strong>
+                </Link>
+              </div>
+
+              <div className="a5 proof">
+                <div className="proof-avatars">
+                  {[['#e8a87c','M'],['#85c1e9','J'],['#82e0aa','S'],['#bb8fce','R'],['#f9c74f','K']].map(([bg, l]) => (
+                    <div key={l} className="proof-avatar" style={{ background: bg }}>{l}</div>
+                  ))}
+                </div>
+                <div className="proof-text"><strong>2,400+ notes</strong> written this week</div>
+              </div>
+
+            </div>
+
+            <div className="a6 page-footer">
+              © 2025 Apex Notes · <a href="#">Terms</a> · <a href="#">Privacy</a>
+            </div>
           </div>
 
-          {/* Main content */}
-          <div className="left-content">
+          {/* ── RIGHT — desktop only ── */}
+          <div className="right-panel-wrap">
 
-            <div className="anim-1" style={{ marginBottom: '1.25rem' }}>
-              <span className="badge"><span className="badge-dot" />Now in public beta</span>
-            </div>
+            <div className="deco-circle" style={{ width: 280, height: 280, top: '10%', right: '-60px' }} />
+            <div className="deco-circle" style={{ width: 140, height: 140, bottom: '15%', left: '10%' }} />
 
-            <div className="anim-2">
-              <div className="divider-line" style={{ marginBottom: '1.25rem' }} />
-              <h1 style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: 'clamp(2rem, 8vw, 2.75rem)',
-                fontWeight: 900,
-                lineHeight: 1.1,
-                color: '#1a1a2e',
-                letterSpacing: '-0.02em',
-                marginBottom: '1rem',
-              }}>
-                Where great<br /><em style={{ color: '#c9a96e' }}>work</em> begins.
-              </h1>
-              <p style={{ fontSize: '0.95rem', color: '#777', lineHeight: 1.7, fontWeight: 300 }}>
-                Join thousands of professionals building something remarkable. Your tools, your flow, your rules.
-              </p>
-            </div>
+            <div style={{ position: 'relative', width: '100%', maxWidth: 320, animation: 'fadeIn 1s ease 0.3s both' }}>
 
-            {/* Features */}
-            <div className="anim-3" style={{ margin: '1.75rem 0' }}>
-              {[
-                { icon: '⚡', title: 'Instant setup', desc: 'Live in under 60 seconds' },
-                { icon: '🔒', title: 'Privacy first', desc: 'Your data never leaves your control' },
-                { icon: '✦', title: 'No limits', desc: 'Unlimited projects on every plan' },
-              ].map(f => (
-                <div key={f.title} className="feature-item">
-                  <div className="feature-icon">{f.icon}</div>
-                  <div>
-                    <div style={{ fontSize: '0.82rem', fontWeight: 500, color: '#1a1a2e', marginBottom: 2 }}>{f.title}</div>
-                    <div style={{ fontSize: '0.78rem', color: '#999', fontWeight: 300 }}>{f.desc}</div>
+              <div className="sticky-note sticky-1">
+                <div className="sticky-title">📌 Idea</div>
+                Build something people love
+              </div>
+              <div className="sticky-note pink sticky-2">
+                <div className="sticky-title">🎯 Todo</div>
+                Review meeting notes
+              </div>
+
+              <div className="count-pill">✦ 12 notes</div>
+
+              <div className="notebook">
+                <div className="nb-cover">
+                  <div className="nb-top-row">
+                    <div className="nb-badge"><span className="nb-dot" />My Notes</div>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff30" strokeWidth="1.5" strokeLinecap="round">
+                      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                  </div>
+
+                  <div className="nb-title-area">
+                    <div className="nb-title">Daily Journal<span className="cursor" /></div>
+                    <div className="nb-subtitle">Last edited just now</div>
+                  </div>
+
+                  <div className="nb-lines">
+                    {[
+                      { color: '#c9a96e', width: '85%', tag: 'Work', tagBg: '#c9a96e22', tagColor: '#c9a96e' },
+                      { color: '#82e0aa', width: '70%', tag: 'Done', tagBg: '#82e0aa22', tagColor: '#82e0aa' },
+                      { color: '#85c1e9', width: '90%', tag: 'Idea', tagBg: '#85c1e922', tagColor: '#85c1e9' },
+                      { color: '#bb8fce', width: '60%', tag: null },
+                      { color: '#f9c74f', width: '75%', tag: null },
+                      { color: '#ffffff30', width: '45%', tag: null },
+                    ].map((line, i) => (
+                      <div key={i} className="nb-line-row">
+                        <div className="nb-line-bullet" style={{ background: line.color }} />
+                        <div className="nb-line-text" style={{ width: line.width, background: `${line.color}30` }} />
+                        {line.tag && (
+                          <div className="nb-line-tag" style={{ background: line.tagBg, color: line.tagColor }}>{line.tag}</div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ marginTop: '1.25rem', display: 'flex', justifyContent: 'flex-end' }}>
+                    <svg width="80" height="28" viewBox="0 0 80 28">
+                      <path className="pen-line" d="M4 22 Q 20 6, 36 14 Q 52 22, 68 8 Q 74 4, 78 10" />
+                    </svg>
                   </div>
                 </div>
-              ))}
-            </div>
 
-            {/* CTA */}
-            <div className="anim-4">
-              <Link href="/signup" className="btn-primary">Create Note</Link>
-            </div>
-
-            {/* Social proof */}
-            <div className="anim-5" style={{ marginTop: '1.75rem' }}>
-              <div className="social-proof">
-                <div className="avatars">
-                  {[['#e8a87c','M'],['#85c1e9','J'],['#82e0aa','S'],['#bb8fce','R']].map(([bg, letter]) => (
-                    <div key={letter} className="avatar" style={{ background: bg }}>{letter}</div>
-                  ))}
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.72rem', fontWeight: 500, color: '#1a1a2e' }}>12,400+ creators</div>
-                  <div style={{ fontSize: '0.68rem', color: '#aaa', fontWeight: 300 }}>joined this month</div>
-                </div>
-                <div style={{ marginLeft: 'auto', display: 'flex', gap: 2 }}>
-                  {[1,2,3,4,5].map(i => (
-                    <span key={i} style={{ color: '#c9a96e', fontSize: 12 }}>★</span>
-                  ))}
-                </div>
+                <div style={{
+                  position: 'absolute', left: 0, top: 10, bottom: 10, width: 12,
+                  background: 'linear-gradient(to right, #0d0c0a, #2c2620)',
+                  borderRadius: '4px 0 0 4px', zIndex: -1,
+                }} />
               </div>
+
+              <div style={{ display: 'flex', gap: 10, marginTop: 20, paddingLeft: 12 }}>
+                {[
+                  { title: 'Shopping list', lines: 3, color: '#c9a96e' },
+                  { title: 'Book notes', lines: 4, color: '#82e0aa' },
+                ].map(card => (
+                  <div key={card.title} style={{
+                    flex: 1, background: 'var(--cream)',
+                    border: '1.5px solid var(--border)',
+                    borderRadius: 12, padding: '0.75rem',
+                    boxShadow: '0 4px 14px #1a171412',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 8 }}>
+                      <div style={{ width: 6, height: 6, background: card.color, borderRadius: '50%' }} />
+                      <div style={{ fontSize: '0.65rem', fontWeight: 600, color: '#1a1714', fontFamily: 'Lora, serif' }}>{card.title}</div>
+                    </div>
+                    {Array.from({ length: card.lines }).map((_, i) => (
+                      <div key={i} style={{
+                        height: 2, background: '#e5dfd6', borderRadius: 99, marginBottom: 5,
+                        width: i === card.lines - 1 ? '60%' : '100%',
+                      }} />
+                    ))}
+                  </div>
+                ))}
+              </div>
+
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="anim-1 page-footer">
-            © 2025 Apex Inc. ·{' '}
-            <a href="#" style={{ color: '#bbb', textDecoration: 'underline', textUnderlineOffset: 3 }}>Terms</a>
-            {' '}·{' '}
-            <a href="#" style={{ color: '#bbb', textDecoration: 'underline', textUnderlineOffset: 3 }}>Privacy</a>
-          </div>
-        </div>
-
-        {/* ── RIGHT: Visual Panel — desktop only ── */}
-        <div className="right-panel right-panel-wrap anim-panel">
-
-          {/* Decorative lines */}
-          <div style={{ position: 'absolute', top: 40, left: 40, width: 80, height: 80, border: '1px solid #d4b896', borderRadius: 4, opacity: 0.4, transform: 'rotate(15deg)' }} />
-          <div style={{ position: 'absolute', bottom: 60, right: 50, width: 50, height: 50, border: '1px solid #d4b896', borderRadius: 4, opacity: 0.3, transform: 'rotate(-10deg)' }} />
-          <div style={{ position: 'absolute', top: '30%', right: 30, width: 6, height: 80, background: '#c9a96e', borderRadius: 3, opacity: 0.35 }} />
-          <div style={{ position: 'absolute', bottom: '25%', left: 30, width: 6, height: 50, background: '#1a1a2e', borderRadius: 3, opacity: 0.15 }} />
-
-          {/* Floating card */}
-          <div className="floating-card" style={{
-            background: '#fff', borderRadius: 16, padding: '2rem',
-            maxWidth: 320, width: '100%',
-            boxShadow: '0 32px 80px #1a1a2e18, 0 8px 24px #1a1a2e0c',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: '1.5rem' }}>
-              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'linear-gradient(135deg, #1a1a2e, #2d3561)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ color: '#c9a96e', fontSize: 18 }}>✦</span>
-              </div>
-              <div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: '0.95rem', color: '#1a1a2e' }}>Good morning, Alex</div>
-                <div style={{ fontSize: '0.72rem', color: '#aaa', fontWeight: 300 }}>Monday, March 9</div>
-              </div>
-            </div>
-
-            {[
-              { label: 'Projects', val: 87, color: '#c9a96e' },
-              { label: 'Tasks done', val: 64, color: '#1a1a2e' },
-              { label: 'This week', val: 92, color: '#82e0aa' },
-            ].map(s => (
-              <div key={s.label} style={{ marginBottom: '0.85rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                  <span style={{ fontSize: '0.72rem', color: '#888', fontWeight: 400 }}>{s.label}</span>
-                  <span style={{ fontSize: '0.72rem', color: '#1a1a2e', fontWeight: 500 }}>{s.val}%</span>
-                </div>
-                <div style={{ height: 5, background: '#f0ece4', borderRadius: 999 }}>
-                  <div style={{ height: '100%', width: `${s.val}%`, background: s.color, borderRadius: 999 }} />
-                </div>
-              </div>
-            ))}
-
-            <div style={{ marginTop: '1.25rem', padding: '0.85rem', background: '#fdf6ec', borderRadius: 10, border: '1px solid #e8d5b0' }}>
-              <div style={{ fontSize: '0.7rem', color: '#b8892a', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 4 }}>Today's highlight</div>
-              <div style={{ fontSize: '0.8rem', color: '#1a1a2e', lineHeight: 1.5, fontWeight: 300 }}>You completed 3 milestones ahead of schedule. Keep it up! 🎉</div>
-            </div>
-          </div>
-
-          {/* Testimonial chip */}
-          <div style={{
-            position: 'absolute', bottom: 60, left: '50%', transform: 'translateX(-50%)',
-            background: '#fff', borderRadius: 999,
-            padding: '10px 18px',
-            display: 'flex', alignItems: 'center', gap: 10,
-            boxShadow: '0 8px 32px #1a1a2e14',
-            whiteSpace: 'nowrap',
-          }}>
-            <div style={{ width: 30, height: 30, borderRadius: '50%', background: 'linear-gradient(135deg, #85c1e9, #82e0aa)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, color: '#fff' }}>J</div>
-            <div>
-              <div style={{ fontSize: '0.72rem', fontWeight: 500, color: '#1a1a2e' }}>"Changed how I work entirely"</div>
-              <div style={{ fontSize: '0.65rem', color: '#aaa' }}>Jamie L. · Product Designer</div>
-            </div>
-          </div>
-        </div>
-
-      </main>
+        </main>
+      </div>
     </>
   );
 }

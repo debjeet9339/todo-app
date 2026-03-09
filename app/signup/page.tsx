@@ -34,11 +34,15 @@ export default function SignUp() {
       body: JSON.stringify({ username, email, password }),
     })
     const data = await res.json()
-    console.log(data)
     setLoading(false)
-    setDone(true)
+
     if (res.ok) {
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('username', data.username || data.user?.username || '')
+      document.cookie = `token=${data.token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`
       router.push('/notes')
+    } else {
+      alert(data.message || 'Something went wrong')
     }
   }
 
