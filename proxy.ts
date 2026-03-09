@@ -3,7 +3,7 @@ import { jwtVerify } from 'jose'
 
 const PUBLIC_ROUTES = ['/', '/login', '/signup', '/forgot-password']
 
-async function middleware(req: NextRequest) {
+async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
 
   // Allow public routes and internal Next.js paths
@@ -33,7 +33,7 @@ async function middleware(req: NextRequest) {
   }
 }
 
-export default middleware
+export default proxy
 
 export const config = {
   matcher: ['/notes/:path*'],
