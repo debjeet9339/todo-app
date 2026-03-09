@@ -13,8 +13,13 @@ function verifyToken(token: string | undefined) {
   }
 }
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   await connectDB()
+
+  const { id } = await params
 
   const token = req.headers.get("Authorization")?.split(" ")[1]
   const decoded = verifyToken(token)
@@ -25,9 +30,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
   const { title, description } = await req.json()
 
-  // findOneAndUpdate with userId ensures users can only edit their OWN notes
   const note = await Note.findOneAndUpdate(
-    { _id: params.id, userId: new mongoose.Types.ObjectId(decoded.userId) },
+    { _id: id, userId: new mongoose.Types.ObjectId(decoded.userId) },
     { title, description },
     { new: true }
   )
@@ -39,8 +43,13 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   return NextResponse.json(note)
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   await connectDB()
+
+  const { id } = await params
 
   const token = req.headers.get("Authorization")?.split(" ")[1]
   const decoded = verifyToken(token)
@@ -49,9 +58,8 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
   }
 
-  // findOneAndDelete with userId ensures users can only delete their OWN notes
   const note = await Note.findOneAndDelete({
-    _id: params.id,
+    _id: id,
     userId: new mongoose.Types.ObjectId(decoded.userId)
   })
 
